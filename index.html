@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Pink Tarot 🌸</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Magical Tarot</h1>
+            <p>Твое нежное предсказание на сегодня</p>
+        </header>
+
+        <div class="card-section">
+            <div id="tarot-card" class="tarot-card">
+                <div class="card-inner">
+                    <div class="card-front">✨</div>
+                    <div class="card-back">
+                        <img id="card-image" src="" alt="Карта дня">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prediction-box">
+                <h2 id="card-name" class="fade-in">Нажми на карту</h2>
+                <p id="prediction" class="fade-in">Узнай, что приготовили звезды сегодня...</p>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="https://t.me/your_nickname" target="_blank" class="social-btn tg">Telegram</a>
+            <a href="https://instagram.com/your_nickname" target="_blank" class="social-btn inst">Instagram</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+/* Основные настройки и живой фон */
+body {
+    background: linear-gradient(45deg, #fff0f6, #ffdeeb, #f3d9fa);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    color: #854d6a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Контейнер сайта */
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 40px 30px;
+    border-radius: 40px;
+    box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
+    backdrop-filter: blur(12px);
+    width: 340px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+h1 { font-size: 28px; margin-bottom: 5px; color: #d63384; }
+header p { font-size: 14px; opacity: 0.8; margin-bottom: 25px; }
+
+/* Стили карты */
+.tarot-card {
+    width: 180px;
+    height: 280px;
+    margin: 0 auto 20px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border-radius: 15px;
+}
+
+.tarot-card.is-flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-front {
+    background: #ffc0cb;
+    border: 5px solid #fff;
+    font-size: 60px;
+    color: white;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+    overflow: hidden;
+}
+
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Анимация текста */
+.fade-in {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: 0.8s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.prediction-box h2 { font-size: 22px; margin: 15px 0 10px; }
+.prediction-box p { font-size: 16px; line-height: 1.5; min-height: 50px; }
+
+/* Кнопки соцсетей */
+.social-links { margin-top: 30px; }
+.social-btn {
+    display: block;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.tg { background: #ff85a1; }
+.inst { background: #f06292; }
+.social-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+// Массив с картами и предсказаниями
+const cards = [
+    { 
+        name: "Влюбленные", 
+        img: "https://images.unsplash.com/photo-1635627408144-6bf36d28fb98?w=400", 
+        text: "Сегодня день гармонии. Слушай свое сердце, оно подскажет верный путь в отношениях." 
+    },
+    { 
+        name: "Звезда", 
+        img: "https://images.unsplash.com/photo-1601024445121-e5b4cc248a3f?w=400", 
+        text: "Время надежды и вдохновения! Твои самые смелые мечты начинают обретать форму." 
+    },
+    { 
+        name: "Солнце", 
+        img: "https://images.unsplash.com/photo-1633463300309-883a483a936a?w=400", 
+        text: "Яркий и успешный день! Ты в центре внимания, и удача сама идет к тебе в руки." 
+    },
+    { 
+        name: "Мир", 
+        img: "https://images.unsplash.com/photo-1579208575657-c595a05383b7?w=400", 
+        text: "Завершение важного этапа. Ты на пороге чего-то грандиозного и прекрасного." 
+    }
+];
+
+const tarotCard = document.getElementById('tarot-card');
+const cardName = document.getElementById('card-name');
+const prediction = document.getElementById('prediction');
+const cardImage = document.getElementById('card-image');
+
+// Флаг, чтобы нельзя было кликать бесконечно во время анимации
+let isRevealed = false;
+
+tarotCard.addEventListener('click', () => {
+    if (isRevealed) return; // Останавливаем, если карта уже открыта
+    isRevealed = true;
+
+    // Выбираем карту дня (привязано к дате)
+    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+    const cardIndex = dayOfYear % cards.length;
+    const todayCard = cards[cardIndex];
+
+    // Сначала скрываем текущий текст (если был)
+    cardName.classList.remove('visible');
+    prediction.classList.remove('visible');
+
+    // Переворачиваем карту
+    tarotCard.classList.add('is-flipped');
+    
+    // Подставляем контент в середине анимации поворота
+    setTimeout(() => {
+        cardImage.src = todayCard.img;
+        cardName.textContent = todayCard.name;
+        prediction.textContent = todayCard.text;
+
+        // Плавно показываем новый текст
+        cardName.classList.add('visible');
+        prediction.classList.add('visible');
+    }, 400);
+});
